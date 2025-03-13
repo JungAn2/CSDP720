@@ -62,10 +62,12 @@ null_mean = 4.0
 # Use z-test since the sample size is large
 z_stat = (mean_rating - null_mean) / (std_dev_rating / n**0.5)
 z_critical = norm.ppf(1 - alpha / 2)
+p_value = 2 * (1 - norm.cdf(abs(z_stat)))
 
 print()
 print(f"Z-statistic: {z_stat}")
 print(f"Z-critical: {z_critical}")
+print(f"P-value: {p_value}")
 
 # Print the results
 if abs(z_stat) > z_critical:
