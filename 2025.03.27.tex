@@ -1,0 +1,241 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{hyperref} % Required for clickable URLs
+\usepackage{amsmath} % Required for advanced math environments like bmatrix
+
+\title{COSC720-03.27.2025}
+\author{Jungho An}
+\date{March 2025}
+
+\begin{document}
+
+\maketitle
+\clearpage
+
+\section{Part 1.}
+\subsection{Linear Regression}
+Errors vs residuals\\
+Error = $y_{observed}-y_{true}$ \quad\quad\quad\quad $y_{true}-y_{model}$\\
+residual = $y_{observed}-y_{predicted}$ \quad\quad $y_{observed}-y_{fitted}$\\
+\url{https://agdal1125.github.io/assets/images/err_res.png}
+\subsection{$i.i.d.$ : Independent identical distributed}
+\subsubsection{Are they same distribution}
+If condition are not satisfied, change the hypothesis\\
+Eg. Flip coin. \quad\quad result=i.i.id
+
+\subsection{Correlation vs regression}
+\begin{array}{cc}
+    Correlation & Regression \\
+    x & \\
+    Single Linear & Linear\\
+    Multiple Linear & Quantitize\\
+    Non-linear & Non-linear\\
+    r-value & Equation (y = mx + b) \\
+     & 2\ measurement \\
+     & To\ make\ a\ regression\ causation, \\
+     & you\ must\ consider\ experiments, \\
+     & time\ orders,\ theory, \\
+     & and\ control\ confounders.
+\end{array}
+
+\section{Part 2.}
+\subsection{Linear Regression}
+linear approximation of x casual relationship (independent variable predictor(s))\\
+$x->y$ \quad\quad y = ax + b + E (y = mx+b)\\ \\
+Dependent variable (predicted)\\
+\[x_1....x_k -> y \quad y = f(x_1,....x_k) = \beta_0 + \beta_1x_1+\beta_2x_2+....+\beta_kx_k + E\]
+\subsection{ANOVA. Analysis of variability}
+
+SST = SSE + SSR\\
+SST: Sum of squared total\\
+\[SST=\sum^n_{i=1}(y_i-\bar{y})^2\]
+SSE: Sum of sqared errors\\
+\[SSE=\sum^n_{i=1}(y_i-\hat{y}_i)^2\]
+SSR: Sum of squared regression\\
+\[SSR=\sum^n_{i=1}(\hat{y}_i-\bar{y})^2\]
+
+\section{Part 3}
+\subsection{$R^2$}
+\begin{itemize}
+    \item Total Variability (SST)
+    \begin{itemize}
+        \item Explained (SSR)
+        \item unexplained (SSE)
+    \end{itemize}
+\end{itemize}
+
+Expect $0 \leq \frac{SSR}{SST} \leq 1$ (Bigger number the better) \\
+\[R^2 = \frac{SSR}{SST}\ OR\ 1-\frac{SSE}{SST}\]\\
+\\
+If $R^2$ = 0, Your regression explains nothing of variability \\
+Depends on subjects\\
+0.7 \~ 0.99 is amazing (Physics \& Chemistry)\\
+0.2 \~ 0.4 is good (Economic \& Finance)\\
+$R^2 < 50\% = 0.5$\\
+IF $R^2$ = 1, Your regression explains the entire variability\\
+\\
+\begin{itemize}
+    \item Limit of $R^2$
+    \begin{itemize}
+        \item No causation indicated
+        \item sensitive to overfitting
+        \item Doesn't always indicate a good model\\
+        =$$>$$ Adjusted $R^2$\\
+        \[R^2_{adj} = 1 - \frac{(1-R^2)(n-1)}{n-R-1}\]
+        n = # of observation\\
+        R = # of predictors\\
+        Notice $R^2_{adj}$ must be applied further with the residual analysis
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Residual Analysis}
+\~ is a process of examining the residuals to evaluate how well a regression model fits the data. \\
+It helps to check of assumption of a regression model are valid.
+\begin{itemize}
+    \item Residuals are randomly distributed
+    \item Normal distributionof Residuals
+    \item Ensuring constant variance
+    \item Defect outlier and infulential points
+\end{itemize}
+
+\section{Part 4}
+\subsection{OLS - Ordinary Least Square}
+\subsubsection{}
+OLS is generally applicable to linear regression models. \\
+Here "linear" means linear in the parameters. \\
+\[y = \beta_0 + \beta_1x^2+\beta_2x^3+E This\ is\ linear \]
+\[y=\beta_0+\beta_2(logx)+E\ This\ is\ linear\]
+\[y=\beta_0+e^{\beta_1x}+E\ This\ is\ not\ linear\]
+\\
+OLS. Ordinary (Least Square = stands for min square error, or SSE)\\
+The lower error =$>$ the better explainatory power\\
+This method aims to find a line with minimum sum of squared errors.\\
+\[min\sum^n_{i=1}E_i^2\]
+
+\subsubsection{}
+How to compute
+\[s(b)(OLS)=\sum(y_i-x^T_ib)^2 = (y-xb)^T(y-xb)\]
+\\
+Other methods
+\begin{itemize}
+    \item GLS (Generalized Least Square)
+    \begin{itemize}
+        \item When error terms are correlated or have non-constant variance
+        \item In OLS, residuals are i.i.d. while in GLS incorporates a known or estimated error covariance.
+    \end{itemize}
+    \item Bayesian regression
+    \item kernel regression
+    \item Gaussian process regression
+\end{itemize}
+\\
+Eg. Predict house predicted\\
+\[y=\beta_0+\beta_1x+E\]
+x: area of house\\
+\begin{array}{cc}
+    \text{x} & \text{y} & \text{$\sigma^2$}\\
+        1 & 2 & 1 \\
+        2 & 3 & 4 \\
+        3 & 5 & 9 \\
+        4 & 4 & 16 \\
+        5 & 5 & 25 \\
+\end{array}
+
+\textbf{Step1} 
+\[x=\begin{bmatrix}
+    1 & 1 \\
+    1 & 2 \\
+    1 & 3 \\
+    1 & 4 \\
+    1 & 5
+\end{bmatrix}
+y=\begin{bmatrix}
+    2 \\
+    3 \\
+    5 \\
+    4 \\
+    5
+\end{bmatrix}\]
+
+\textbf{step2}
+\[\sum=\begin{bmatrix}
+    1 & & & & \\
+    & 4 & & & \\
+    & & 9 & & \\
+    & & & 16 & \\
+    & & & & 25
+\end{bmatrix}\]
+\[\sum^{-1}=\begin{bmatrix}
+    1 & & & & \\
+    & 0.25 & & & \\
+    & & 0.1111 & & \\
+    & & & 0.0625 & \\
+    & & & & 0.04
+\end{bmatrix}\]
+\textbf{step3}
+\[x^T\sum^{-1}x\]
+\[\begin{bmatrix}
+    1 & 1 & 1 & 1 & 1 \\
+    1 & 2 & 3 & 4 & 5 \\
+\end{bmatrix}
+\begin{bmatrix}
+    1 & & & & \\
+    & 0.25 & & & \\
+    & & 0.1111 & & \\
+    & & & 0.0625 & \\
+    & & & & 0.04
+\end{bmatrix}
+\begin{bmatrix}
+    1 & 1 \\
+    1 & 2 \\
+    1 & 3 \\
+    1 & 4 \\
+    1 & 5
+\end{bmatrix}\]
+\[=\begin{bmatrix}
+    1.4636 & 2.2833 \\
+    2.2833 & 5 \\
+\end{bmatrix}\]
+\textbf{step4}
+Comput $x^T\sum^{-1}y$\\
+\[\begin{bmatrix}
+    1 & 1 & 1 & 1 & 1 \\
+    1 & 2 & 3 & 4 & 5 \\
+\end{bmatrix}
+\begin{bmatrix}
+    1 & & & & \\
+    & 0.25 & & & \\
+    & & 0.1111 & & \\
+    & & & 0.0625 & \\
+    & & & & 0.04
+\end{bmatrix}
+\begin{bmatrix}
+    2 \\
+    3 \\
+    5 \\
+    4 \\
+    5
+\end{bmatrix}\]
+\[=\begin{bmatrix}
+    3.7956 \\
+    7.3667
+\end{bmatrix}\]
+\textbf{step5}
+\[\hat{\beta}_{GLS} = \begin{bmatrix}
+    1.4636 & 2.2833 \\
+    2.2833 & 5
+\end{bmatrix}^{-1}
+\begin{bmatrix}
+    3.7956 \\
+    7.3667
+\end{bmatrix}
+=\begin{bmatrix}
+    1.04 \\
+    1.00
+\end{bmatrix}\]
+\\
+This means \\
+\begin{itemize}
+    \item When x=0 $=>$ y=1.04 (Explained $\beta_0$)
+    \item Whenever increase 1 unit in x_value, y increase 1 unit (Explained\ $\beta_1 = 1.0$)
+\end{itemize}
+\end{document}

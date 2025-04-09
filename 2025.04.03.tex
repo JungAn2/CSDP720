@@ -1,0 +1,155 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{hyperref} % Required for clickable URLs
+\usepackage{amsmath} % Required for advanced math environments like bmatrix
+
+
+\title{COSC720-04.03.2025}
+\author{Jungho An}
+\date{April 2025}
+
+\begin{document}
+
+\maketitle
+\clearpage
+
+\[ y=b_0+b_1x \]
+In reality there are more variables
+\[
+\displaystyle
+y = b_0 + b_1x + \dots + b_kx_k
+\]
+More factors, more accurate the model is what should be but it's not true.
+
+Add a new variable, it can be correlated with other variables.
+\[
+y = b_0 + b_1x_1
+\]
+Add $x_2$
+\[
+y = b_0 + b_1x_1 + b_2x_2
+\]
+
+\textbf{2 ways to evaluate if a new variable is significant or not}\\
+\textbf{way 1}\\
+\begin{list}{}{%
+    \setlength{\leftmargin}{1em}
+    \setlength{\topsep}{0pt}% Remove space before the list
+    \setlength{\itemsep}{0pt}% Remove space between items
+    \setlength{\parsep}{0pt}% remove space between paragraphs within an item
+    \setlength{\partopsep}{0pt}% remove space between the first line and the top of the list
+    \setlength{\baselineskip}{0pt}% removes the vertical space between lines
+    \setlength{\itemindent}{0pt}% removes the horizontal indent of the item label
+    \setlength{\labelsep}{0pt}% removes the space between the label and the item
+    \setlength{\labelwidth}{0pt}% removes the width reserved for the label
+}
+    \item $R^2$ and $R^2_{adj}$\\
+    \item $R^2_{adj}$ Look for proof if you want to know \\
+    \item $R^2$ penalizes excessive use of variables\\\
+    \item if regress model increse performance by adding a new variable $R^2_{adj}$ increases\\
+    \item if $R^2_{adj}$ increases, the new variable is significant\\
+    \item if $R^2_{adj}$ decreases, the new variable is not significant\\
+    \item $R^2$ increase, with more variables\\
+    \item But $R^2_{adj}$ increase, keep the new variable\\
+    \item $R^2_{adj}$ decrease, throw away the new variable\\
+\end{list}
+\textbf{way 2}\\
+\begin{list}{}{%
+    \setlength{\leftmargin}{1em}}
+    \item F-test\\
+    \item F-test is for testing overall significance of the model\\
+    \item lower the F-Statistic value, the closer to a non-significant model\\
+    \item \textbf{Why do we need F-test when we have $R^2$?}\\
+\end{list}
+\indent \indent Named after Fisher\\
+\indent \indent tests the overal significance of regression model\\
+\indent \indent \indent $H_0$: $b_1=b_2=\dots=b_k=0$\\
+\indent \indent \indent $H_a$: at least one $b_i$ is not equal to 0\\
+\indent \indent Determine significant difference across multiple group\\
+\indent \indent \indent (AI. to give you a simple example to explain this attribute)\\
+\indent \indent Providing guidance for subsequent detailed analyses.\\
+\indent \indent \indent (TO BE CONTINUED)\\
+\\
+\textbf{OLS} Assumptions\\
+\indent 1. Linearity\\
+\indent 2. Random sampling\\
+\indent 3. No perfect multicollinearity\\
+\indent 4. Zero conditional mean\\
+\indent 5. Homoscedasticity\\
+\indent 6. Normality of Errors\\
+\indent 7. No autocorrelation\\
+\\
+\indent \textbf{1. Linearity}\\
+\indent \indent It means your regression must be linear in parameters!\\
+\[ y=b_0+b_1x_1+b_2x_2\ Linear \]
+\[ y=b_0+b_1x^3+b_2x^7\ Linear \]
+\[ y=b_0+b_1log(x_1)+b_2e^{x_2}\ Linear \]
+\[ y=b_0+e^{b_1x_1}+b_2x_2\ Not\ Linear\] 
+
+\indent \textbf{6. Normality of Errors}\\
+\indent \indent Errors must be normal distributed\\
+\indent \indent Only worry when sample is small\\
+\indent \indent \textbf{Why???}\\
+\indent \indent \indent 1. it will ensure valid \& reliable stattistic inference (hypothesis tests C.Is) regarding regression coefficients (OLS estimators).\\
+\indent \indent \indent 2. Particular critical in small samples.\\
+\indent \indent \indent What happens if error ~N(0, $\sigma$)\\
+\indent \indent \indent \indent 1. Large sample: (Central limit theorem) $=>$ No worry\\
+\indent \indent \indent \indent 2. Small sample: You need to do transformations (e.g. log-tranformation) or robust/non-parametric estimation tech\\
+\indent \indent \indent \indent 3. How to examine normality in practice. error is not accessable $=>$ check residuals\\
+\indent \indent \indent \indent \indent Common methods\\
+\indent \indent \indent \indent \indent \indent * Quantile-Quantile (Q-Q) plot\\
+\indent \indent \indent \indent \indent \indent * Shapiro-Wilk test\\
+\indent \indent \indent \indent \indent \indent * Jarque-Bera test\\
+
+\indent \textbf{4. Zero conditional mean}\\
+\indent \indent \textbf{Meaning}\\
+\indent \indent \indent Given all independent variables x, the error term \& han an expected value of 0\\
+\indent \indent \indent \indent i.e. errors do not deviate form 0 on average\\
+\indent \indent \textbf{Why?}\\
+\indent \indent \indent 1. The primary goal is ensuring the regression estimates are unbiased.
+\indent \indent \indent 2. If the error mean $\neq$ 0, there is systematic bias in the model which implies something important has been omitted or misspecified causing biased parameter estimates.\\
+\indent \indent \textbf{What if error mean $\neq$ 0?}\\
+\indent \indent \indent * If causes systematic bias\\
+\indent \indent \indent * Model regression deviates from actual obersvations\\
+\indent \indent \indent \indent Eq. \[
+income=b_1+b_1*Education+E\]
+mean of E $\neq$ 0\\
+\\
+\indent \textbf{3. No perfect multicollinearity}\\
+\indent \indent \textbf{Def.}\\
+\indent \indent \indent ~ occurs when 2 or more independent variables in a regression model are highly correlated or nearly linear dependent.\\
+\indent \indent \textbf{why?}\\
+\indent \indent \indent If there  is a perfect collinear exists, then the matrix (x'X) is singular | make OLS estimation impossible\\
+\\
+\indent \indent \textbf{How to deal with multicollinearity?}\\
+\indent \indent \indent 1. Remove or combine variables\\
+\indent \indent \indent 2. Transform or standaridze variables (such as log, ratio, ..)
+\indent \indent \indent 3. Rideg regression\\
+\indent \indent \indent 4. Principal component Analysis to reduce dimensionality \& remove multicollinearity\\
+\\
+\indent \textbf{5. Homoscedasticity}\\
+\indent \indent \textbf{Def.}\\
+\indent \indent \indent Var(E|x) = $\sigma^2$ = const.\\
+\indent \indent \indent \indent i.e var(E|x) remains constant.\\
+\indent \indent \textbf{Why?}\\
+\indent \indent \indent 1. ensure OLS parameter estimations have the smallest variance\\
+\indent \indent \indent 2. ensures accurate, reliable errors for parameters.
+\indent \indent \indent 3. guarantees reliable statistical inference (t-test, f-test, c.i)\\
+\indent \indent \textbf{If violated}\\
+\indent \indent \indent * Parameters estimation remain unbiased but less efficient\\
+\indent \indent \indent * Standard errors becomes biased\\
+\\
+\textbf{Statistic tools to compare 2 Regression}\\
+\textbf{Models}\\
+\begin{itemize}
+    \setlength\itemsep{0em}
+    \item $R^2$ and $R^2_{adj}$
+    \item F-test
+    \item AIC (Akaike Information Criterion)
+    \item BIC (Bayesian Information Criterion)
+    \item Prediction Error Criteria (RMSE, MAE, etc)
+    \item Cross-Validation (Access general ability effectively)
+    \item Likelyhood Ratio Test (LR Test)
+\end{itemize}
+
+\end{document}
